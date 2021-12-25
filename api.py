@@ -2,6 +2,7 @@ from flask import Flask,request,jsonify
 from flask_cors import CORS
 
 from bert import QA
+import clean_corpus as cc
 
 app = Flask(__name__)
 CORS(app)
@@ -10,8 +11,10 @@ model = QA("model")
 
 @app.route("/predict",methods=['POST'])
 def predict():
-    doc = request.json["document"]
+    #doc = request.json["document"]
+    doc = cc.getCleanCorpusEnglish()
     q = request.json["question"]
+  
     try:
         out = model.predict(doc,q)
         return jsonify({"result":out})
