@@ -3,9 +3,6 @@ import clean_corpus as cc
 from bert import QA
 
 
-print(cc.getCleanCorpusEnglish())
-
-
 model = QA("model")
 
 doc = cc.getCleanCorpusEnglish()
