@@ -23,5 +23,6 @@ def getCleanCorpusEnglish():
         i+=1
     
     clean_result = cleanhtml(result)
-    return clean_result
+    strippedText = str(clean_result).replace('[','').replace(']','').replace('\'','').replace('\"','').replace('(','').replace(')','').replace('/','')
+    return strippedText
 

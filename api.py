@@ -2,7 +2,7 @@ from flask import Flask,request,jsonify
 from flask_cors import CORS
 
 from bert import QA
-import clean_corpus as cc
+#import clean_corpus as cc
 
 app = Flask(__name__)
 CORS(app)
@@ -11,9 +11,9 @@ model = QA("model")
 
 @app.route("/predict",methods=['POST'])
 def predict():
-    #doc = request.json["document"]
-    doc = cc.getCleanCorpusEnglish()
-    print("Corpus Has been loaded........!")
+    doc = request.json["document"]
+    #doc = cc.getCleanCorpusEnglish()
+    #print("Corpus Has been loaded........!")
     q = request.json["question"]
   
     try:
