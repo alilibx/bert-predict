@@ -1,7 +1,7 @@
 import json
 
 
-def getcleanCorpusEnglish():
+def getCleanCorpusEnglish():
     with open('./training/services_en.json') as file: 
         data = json.load(file)
 
