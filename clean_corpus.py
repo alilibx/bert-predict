@@ -11,7 +11,7 @@ def getCleanCorpusEnglish():
     i = 0
     result = ""
     count = len(data)
-    print("All Services Count="+count)
+    print("Count=",count)
     while i < count:
         result += data[i]["name"] +"," + data[i]["description"]+"," + data[i]["output"]+"," + data[i]["service_fees"] +"," + data[i]["faqs"]
         i+=1
