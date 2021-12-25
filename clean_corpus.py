@@ -1,5 +1,11 @@
 import json
+import re
 
+CLEANR = re.compile('<.*?>') 
+
+def cleanhtml(raw_html):
+  cleantext = re.sub(CLEANR, '', raw_html)
+  return cleantext
 
 def getCleanCorpusEnglish():
     with open('./training/services_en.json') as file: 
@@ -15,6 +21,7 @@ def getCleanCorpusEnglish():
     while i < count:
         result += data[i]["name"] +"," + data[i]["description"]+"," + data[i]["output"]+"," + data[i]["service_fees"] +"," + data[i]["faqs"]
         i+=1
-    #print(data["name"] +" ," + data["description"]+" ," + data["output"]+" ," + data["service_fees"] +" ," + data["faqs"])
-    return result
+    
+    clean_result = cleanhtml(result)
+    return clean_result
 
