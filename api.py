@@ -13,6 +13,7 @@ model = QA("model")
 def predict():
     #doc = request.json["document"]
     doc = cc.getCleanCorpusEnglish()
+    print("Corpus Has been loaded........!")
     q = request.json["question"]
   
     try:
