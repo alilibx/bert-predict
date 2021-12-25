@@ -1,12 +1,11 @@
 from flask import jsonify
-import clean_corpus as cc
 from bert import QA
 
 
 model = QA("model")
-
-doc = cc.getCleanCorpusEnglish()
+with open('textraw.txt') as file: 
+    data = file.read()
 question = "how to get a driving license?"
 
-result = model.predict(doc,question)
+result = model.predict(data,question)
 print(jsonify({"result":result}))
