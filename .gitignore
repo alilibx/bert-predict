@@ -104,6 +104,4 @@ venv.bak/
 .mypy_cache/
 .vscode/
 *.bin
-*.json
-*.txt
 .DS_Store
