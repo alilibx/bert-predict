@@ -44,6 +44,7 @@ class QA:
     
     def predict(self,passage :str,question :str):
         example = input_to_squad_example(passage,question)
+        print('Loading dataset....')
         features = squad_examples_to_features(example,self.tokenizer,self.max_seq_length,self.doc_stride,self.max_query_length)
         all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
         all_input_mask = torch.tensor([f.input_mask for f in features], dtype=torch.long)
@@ -51,9 +52,11 @@ class QA:
         all_example_index = torch.arange(all_input_ids.size(0), dtype=torch.long)
         dataset = TensorDataset(all_input_ids, all_input_mask, all_segment_ids,
                                 all_example_index)
+        print('Dataset loaded....')
         eval_sampler = SequentialSampler(dataset)
         eval_dataloader = DataLoader(dataset, sampler=eval_sampler, batch_size=1)
         all_results = []
+        print('Processing dataset....')
         for batch in eval_dataloader:
             batch = tuple(t.to(self.device) for t in batch)
             with torch.no_grad():
@@ -63,7 +66,7 @@ class QA:
                         }
                 example_indices = batch[3]
                 outputs = self.model(**inputs)
-
+            print('Classifying output',outputs,'....')
             for i, example_index in enumerate(example_indices):
                 eval_feature = features[example_index.item()]
                 unique_id = int(eval_feature.unique_id)
@@ -71,5 +74,8 @@ class QA:
                                     start_logits = to_list(outputs[0][i]),
                                     end_logits   = to_list(outputs[1][i]))
                 all_results.append(result)
+        
+        print('Getting Answers ....')
         answer = get_answer(example,features,all_results,self.n_best_size,self.max_answer_length,self.do_lower_case)
+        print('Returning Answers ....')
         return answer

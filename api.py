@@ -1,5 +1,6 @@
 from flask import Flask,request,jsonify
 from flask_cors import CORS
+import clean_corpus as cc
 
 from bert import QA
 #import clean_corpus as cc
@@ -11,9 +12,9 @@ model = QA("model")
 
 @app.route("/predict",methods=['POST'])
 def predict():
-    doc = request.json["document"]
-    #doc = cc.getCleanCorpusEnglish()
-    #print("Corpus Has been loaded........!")
+    #doc = request.json["document"]
+    doc = cc.getCleanCorpusEnglish()
+    print("Corpus Has been loaded........!")
     q = request.json["question"]
   
     try:
@@ -24,4 +25,4 @@ def predict():
         return jsonify({"result":"Model Failed"})
 
 if __name__ == "__main__":
-    app.run(port=9000)
+    app.run(host='0.0.0.0',port=9000)
